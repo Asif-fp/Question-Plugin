@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');.page-id-2302 section.elementor-section.elementor-top-section.elementor-element.elementor-element-33b7a8e.elementor-hidden-tablet.elementor-hidden-mobile.elementor-section-boxed.elementor-section-height-default.elementor-section-height-default{display:none;}
+.page-id-2302 .elementor.elementor-304.elementor-location-footer{display:none;}
+.page-id-2302 .entry-title{display:none !important;}
+body{font-family:'Segoe UI',sans-serif;background:#fff;padding:2rem;}
+.logo{font-size:2rem;color:#c48762;font-weight:bold;}
+.form-card{border:1px solid #ddd;border-radius:12px;padding:1rem 1.5rem;margin-bottom:1rem;cursor:pointer;transition:0.3s;}
+.selected{border-color:#506A4C !important;}
+.btn-custom{border-radius:30px;background:#506A4C;color:#fff;width:100%;padding:12px 10px;border:none;}
+
+button.btn.btn-custom.next-btn:hover,
+button.btn.btn-custom.next-btn:active,
+button.btn.btn-custom.next-btn:focus,
+button.btn.btn-custom.login-patient:hover,
+button.btn.btn-custom.login-patient:active,
+button.btn.btn-custom.login-patient:focus,
+button.btn.btn-custom.login-register:hover,
+button.btn.btn-custom.login-register:active,
+button.btn.btn-custom.login-register:focus {
+  background: #545454;
+  color: #fff;
+  border: none;
+}
+
+.submit-forms:hover{background:#868686;color:#fff;}
+.hidden-q-container{display:none;}
+
+.fade-in-left{animation:fadeInLeft 0.6s ease-out;}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px);}
+to{opacity:1;transform:translateX(0);}
+}
+
+
+/* .step-content label .title { margin-bottom: 8px; } */
+
+.fade-in-right {
+  animation: fadeInRight 0.6s ease-out;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(10px); /* right side se aayega */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+button.btn:focus,
+button.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.form-container-mq .step-content input:focus{border-color:#506A4C !important;border-width:1px;}
+
+
+
+
+
+
+
+
+
+
+label.isSelected.option-card{border-color:#506a4c;}
+.option-card{border:2px solid #ececec;border-radius:11px;padding:26px 20px;cursor:pointer;display:flex;flex-direction:column;margin-bottom:10px;transition:border-color 0.3s,background-color 0.3s;}
+.option-card:hover{border-color:#ccc;transition:all ease .3s;}
+.option-card input[type="radio"]{display:none;}
+.option-card .title{font-weight:500;color:#111;font-size:16px;}
+.option-card .subtitle{color:#666;font-size:14px;}
+/* Selected state */
+.option-card input[type="radio"]:checked + label{border-color:#506a4c;background-color:#fff0f0;}
+.step-content input[type=radio]{display:none;}
+.form-container-mq input[type=text]{border-radius:6px;margin:-3px 0px 7px 0px;}
+.toaster-notification{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background-color:#4CAF50;/* Green by default for success */
+color:white;padding:10px 10px;border-radius:5px;font-size:13px;box-shadow:0px 4px 10px rgba(0,0,0,0.2);z-index:9999;opacity:0;transition:opacity 0.3s ease,bottom 0.3s ease;text-align:center;}
+.toaster-notification .close-btn{background:none;border:none;color:white;font-size:18px;font-weight:bold;cursor:pointer;position:absolute;top:-21px;right:-27px;}
+.toaster-notification.success{background-color:#4CAF50;}
+.toaster-notification.failure{background-color:#F44336;}
+.toaster-notification.active{opacity:1;bottom:30px;}
+.toaster-notification.fade-out{opacity:0;bottom:20px;}
+.loader{width:48px;height:48px;display:inline-block;position:relative;border:2px solid #000;box-sizing:border-box;animation:rotation 2s linear infinite;position:fixed;top:50%;left:50%;background:rgba(255,255,255,0.8);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.loader::after,.loader::before{content:'';box-sizing:border-box;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;border:2px solid #506a4c;width:38px;height:38px;animation:rotationBack 1.5s linear infinite;transform-origin:center center;}
+.loader::before{width:28px;height:28px;border-color:#000;box-sizing:border-box;animation:rotation 1s linear infinite;background:#506a4c;}
+@keyframes rotation{0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+@keyframes rotationBack{0%{transform:rotate(0deg);}
+100%{transform:rotate(-360deg);}
+}
+.loader-holder{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.8);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:Arial,sans-serif;color:#333;text-align:center;}
+label.option-card-login-mail div{margin:0px 0px 7px 0px;font-size:15px;}
+label.option-card-user-data div{margin:0px 0px 5px 0px;font-size:15px;border-radius:6px;}
+.option-card-height-weight div{margin:0px 0px 7px 0px;font-size:15px;}
+.mq-register label div{margin:0px 0px 7px 0px;font-size:15px;}
+/* Step Design CSS */
+.main-container-mq{max-width:520px !important;width:100%;margin:auto;}
+.main-container-mq .logo a img{max-width:210px;object-fit:contain;}
+.main-container-mq .logo{margin-bottom:40px;}
+.form-container-mq{width:100%;font-family:"Poppins",sans-serif;}
+.form-container-mq h3{font-size:26px;color:#000;font-weight:500;margin:0 0 10px;}
+.form-container-mq .step-content h4{font-size:17px;color:#000;font-weight:400;}
+.form-container-mq .step-content input{padding:17px 17px;max-height:inherit;height:inherit;border:1px solid #ececec;border-radius:7px;font-weight:500;color:#111;font-size:16px;}
+.inputBX {
+    margin-bottom: 10px;
+}
+
+.inputBX ~ .inputBX {
+    margin-bottom: 0;
+}
+@media(max-width:575px){body.page-id-2302{padding:0;}
+.main-container-mq{padding:0 0 20px;margin:0 0 0 30px;}
+.form-container-mq h3{font-size:18px;}
+.form-container-mq .step-content h4{font-size:15px;}
+.option-card{padding:15px 10px;border-width:1px;border-radius:6px;}
+.option-card .title{font-size:14px;}
+.btn-custom{padding:10px 10px;}
+.main-container-mq .logo{margin-bottom:20px;}
+.form-container-mq .step-content input{padding:12px 10px;border-width:1px;border-radius:6px;font-size:14px;}
+}
+/* end */
