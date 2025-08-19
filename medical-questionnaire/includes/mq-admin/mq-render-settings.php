@@ -43,11 +43,9 @@ if (isset($_POST['submit']) && !empty($_POST)) {
     wp_cache_flush();
 }
 
-
-
 $mq_options_return = get_option('mq_options', []);
-$minimum_age_for_treatment = $mq_options_return['minimum-age-for-treatment'] ?? '';
 $website_logo_url = $mq_options_return['website-logo-url'] ?? '';
+$product_outcome_heading = $mq_options_return['product-outcome-heading'] ?? '';
 $repeater_rows = $mq_options_return['repeater_rows'] ?? [];
 $doctor_responses = $mq_options_return['doctor_response_rows'] ?? [];
 
@@ -64,7 +62,8 @@ $doctor_responses = $mq_options_return['doctor_response_rows'] ?? [];
             class="nav-tab <?php echo ($active_tab == 'termination-outcomes') ? 'nav-tab-active' : ''; ?>">Termination
             outcomes</a>
         <a href="?page=medical-questionnaire&tab=doctor-response"
-            class="nav-tab <?php echo ($active_tab == 'doctor-response') ? 'nav-tab-active' : ''; ?>">Doctor response</a>
+            class="nav-tab <?php echo ($active_tab == 'doctor-response') ? 'nav-tab-active' : ''; ?>">Doctor
+            response</a>
 
     </h2>
 
@@ -76,22 +75,38 @@ $doctor_responses = $mq_options_return['doctor_response_rows'] ?? [];
         <?php if ($active_tab == 'general'): ?>
             <table class="form-table">
                 <tbody>
+       
+
                     <tr>
-                        <th scope="row"><?php _e('Minimum age for treatment', 'price-compare-tool'); ?></th>
-                        <td><input type="text" class="regular-text" value="<?php echo $minimum_age_for_treatment; ?>"
-                                name="minimum-age-for-treatment">
+                        <th scope="row">Website logo url</th>
+                        <td><input type="text" class="regular-text" value="<?php echo $website_logo_url; ?>"
+                                name="website-logo-url">
                             <p class="description" id="new-admin-email-description">
-                                Enter minimum age for treatment.
+                                Copy website logo image url and paste here.
+                            </p>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <th scope="row">Form shortcode</th>
+                        <td><input type="text" class="regular-text" value="[mq_questionarrie_form]"
+                                name="question-form-shortcode" disabled>
+                            <p class="description" id="new-admin-email-description">
+                                Copy shortcode and paste in the any page to show question form.
                             </p>
                         </td>
 
                     </tr>
 
                     <tr>
-                        <th scope="row">Website logo url</th>
-                        <td><input type="text" class="regular-text" value="<?php echo $website_logo_url; ?>"
-                                name="website-logo-url">
-
+                        <th scope="row">Products section heading</th>
+                        <td><input type="text" class="regular-text" value="<?php echo $product_outcome_heading;?>"
+                                name="product-outcome-heading">
+                            <p class="description" id="product-outcome-heading-description">
+                                Enter the heading that you want to show on the products outcome.
+                            </p>
                         </td>
 
                     </tr>
@@ -112,26 +127,29 @@ $doctor_responses = $mq_options_return['doctor_response_rows'] ?? [];
                 </thead>
                 <tbody id="repeaterBody">
                     <?php
-                    
+
                     if (!empty($repeater_rows)): ?>
-                    <?php foreach ($repeater_rows as $row): ?>
-                    <tr>
-                        <td>
-                            <input type="text" name="heading[]" style="width: 100%;" placeholder="Enter Heading" value="<?php echo esc_html($row['heading'] ?? ''); ?>"/>
-                            
-                        </td>
-                        <td>
-                            <textarea name="content[]" rows="3" style="width: 100%;" placeholder="Enter Content"><?php echo nl2br(esc_html($row['content'] ?? '')); ?></textarea>
-                        </td>
-                        <td>
-                            <button type="button" onclick="removeRepeaterRow(this)" class="rm-termination-row">Remove</button>
-                        </td>
-                    </tr>
-                          <?php endforeach; ?>
+                        <?php foreach ($repeater_rows as $row): ?>
+                            <tr>
+                                <td>
+                                    <input type="text" name="heading[]" style="width: 100%;" placeholder="Enter Heading"
+                                        value="<?php echo esc_html($row['heading'] ?? ''); ?>" />
+
+                                </td>
+                                <td>
+                                    <textarea name="content[]" rows="3" style="width: 100%;"
+                                        placeholder="Enter Content"><?php echo nl2br(esc_html($row['content'] ?? '')); ?></textarea>
+                                </td>
+                                <td>
+                                    <button type="button" onclick="removeRepeaterRow(this)"
+                                        class="rm-termination-row">Remove</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
 
                     <?php else: ?>
-  <p>No content found.</p>
-<?php endif; ?>
+                        <p>No content found.</p>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
@@ -165,55 +183,56 @@ $doctor_responses = $mq_options_return['doctor_response_rows'] ?? [];
         <?php elseif ($active_tab == 'doctor-response'): ?>
 
 
-<table id="doctorRepeaterTable" border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;" class="form-table">
-    <thead>
-        <tr>
-            <th style="width: 30%;">Heading</th>
-            <th style="width: 50%;">Content</th>
-            <th style="width: 20%;">Action</th>
-        </tr>
-    </thead>
-    <tbody id="doctorRepeaterBody">
-        <?php if (!empty($doctor_responses)) :
-            foreach ($doctor_responses as $index => $row) : ?>
-                <tr>
-                    <td>
-                        <input type="text" name="doctor_heading[]" style="width: 100%;" placeholder="Enter Heading"
-                               value="<?php echo esc_attr($row['heading'] ?? ''); ?>" />
-                    </td>
-                    <td>
-                        <?php
-                        $editor_id = 'doctor_content_' . $index;
-                        wp_editor(
-                            $row['content'] ?? '',
-                            $editor_id,
-                            [
-                                'textarea_name' => 'doctor_content[]',
-                                'textarea_rows' => 5,
-                                'media_buttons' => false,
-                                'editor_class' => 'wp-editor-area'
-                            ]
-                        );
-                        ?>
-                    </td>
-                    <td>
-                        <button type="button" onclick="removeDoctorRow(this)" class="rm-doctor-row">Remove</button>
-                    </td>
-                </tr>
-            <?php endforeach;
-        endif; ?>
-    </tbody>
-</table>
-<br>
-<button type="button" onclick="addDoctorRow()" class="add-doctor-row">+ Add Row</button>
-<script>
-let doctorIndex = <?php echo count($doctor_responses); ?>;
+            <table id="doctorRepeaterTable" border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;"
+                class="form-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Heading</th>
+                        <th style="width: 50%;">Content</th>
+                        <th style="width: 20%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="doctorRepeaterBody">
+                    <?php if (!empty($doctor_responses)):
+                        foreach ($doctor_responses as $index => $row): ?>
+                            <tr>
+                                <td>
+                                    <input type="text" name="doctor_heading[]" style="width: 100%;" placeholder="Enter Heading"
+                                        value="<?php echo esc_attr($row['heading'] ?? ''); ?>" />
+                                </td>
+                                <td>
+                                    <?php
+                                    $editor_id = 'doctor_content_' . $index;
+                                    wp_editor(
+                                        $row['content'] ?? '',
+                                        $editor_id,
+                                        [
+                                            'textarea_name' => 'doctor_content[]',
+                                            'textarea_rows' => 5,
+                                            'media_buttons' => false,
+                                            'editor_class' => 'wp-editor-area'
+                                        ]
+                                    );
+                                    ?>
+                                </td>
+                                <td>
+                                    <button type="button" onclick="removeDoctorRow(this)" class="rm-doctor-row">Remove</button>
+                                </td>
+                            </tr>
+                        <?php endforeach;
+                    endif; ?>
+                </tbody>
+            </table>
+            <br>
+            <button type="button" onclick="addDoctorRow()" class="add-doctor-row">+ Add Row</button>
+            <script>
+                let doctorIndex = <?php echo count($doctor_responses); ?>;
 
-function addDoctorRow() {
-    const tbody = document.getElementById('doctorRepeaterBody');
-    const newRow = document.createElement('tr');
+                function addDoctorRow() {
+                    const tbody = document.getElementById('doctorRepeaterBody');
+                    const newRow = document.createElement('tr');
 
-    newRow.innerHTML = `
+                    newRow.innerHTML = `
         <td>
             <input type="text" name="doctor_heading[]" style="width: 100%;" placeholder="Enter Heading" />
         </td>
@@ -225,24 +244,24 @@ function addDoctorRow() {
         </td>
     `;
 
-    tbody.appendChild(newRow);
-    wp.editor.initialize(`doctor_content_${doctorIndex}`, {
-        tinymce: true,
-        quicktags: true,
-        mediaButtons: false
-    });
-    doctorIndex++;
-}
+                    tbody.appendChild(newRow);
+                    wp.editor.initialize(`doctor_content_${doctorIndex}`, {
+                        tinymce: true,
+                        quicktags: true,
+                        mediaButtons: false
+                    });
+                    doctorIndex++;
+                }
 
-function removeDoctorRow(button) {
-    const row = button.closest('tr');
-    if (document.querySelectorAll('#doctorRepeaterBody tr').length > 1) {
-        row.remove();
-    } else {
-        alert('At least one row is required.');
-    }
-}
-</script>
+                function removeDoctorRow(button) {
+                    const row = button.closest('tr');
+                    if (document.querySelectorAll('#doctorRepeaterBody tr').length > 1) {
+                        row.remove();
+                    } else {
+                        alert('At least one row is required.');
+                    }
+                }
+            </script>
 
 
         <?php endif; ?>

@@ -8,7 +8,8 @@
  */
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+	exit;
 
 // Main class
 class Init_mq
@@ -36,6 +37,7 @@ class Init_mq
 		require(MQ_INCLUDES . '/mq-search-patient-object.php');
 		require(MQ_INCLUDES . '/mq-register-patient.php');
 		require(MQ_INCLUDES . '/mq-login-patient.php');
+		require(MQ_INCLUDES . '/mq-submit-patient-answers-form.php');
 	}
 
 	/**
@@ -56,8 +58,22 @@ class Init_mq
 		wp_register_script('mq-frontend-bootstrap-script', MQ_ASSETS . 'js/bootstrap.min.js', array('jquery'), time(), true);
 		wp_register_script('mq-frontend-script', MQ_ASSETS . 'js/mq-frontend-script.js', array('jquery'), time(), true);
 
+		wp_register_script(
+			'mq-face-detect1',
+			'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0/dist/tf.min.js',
+			array(),
+			time(),
+			true
+		);
+		wp_register_script(
+			'mq-face-detect2',
+			'https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix',
+			array(),
+			time(),
+			true
+		);
 
-		wp_localize_script('mq-frontend-script', 'mq_ajax_object_frontend', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('ajax-nonce')));
+		wp_localize_script('mq-frontend-script', 'mq_ajax_object_frontend', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('ajax-nonce'),'form_page_url'=>get_permalink()));
 
 		// Enque 
 		wp_enqueue_style('mq-frontend-bootstrap-style');
@@ -65,8 +81,10 @@ class Init_mq
 
 		wp_enqueue_script('mq-frontend-jquery-script');
 		wp_enqueue_script('mq-frontend-bootstrap-script');
-		
+
 		wp_enqueue_script('mq-frontend-script');
+		wp_enqueue_script('mq-face-detect1');
+		wp_enqueue_script('mq-face-detect2');
 
 	}
 
@@ -79,12 +97,12 @@ class Init_mq
 	public function mq_include_backend_assets()
 	{
 
-		   wp_enqueue_style(
-        'mq-backend-style',
-        MQ_ASSETS. 'css/mq-backend-style.css',
-        [],
-        time()
-    );
+		wp_enqueue_style(
+			'mq-backend-style',
+			MQ_ASSETS . 'css/mq-backend-style.css',
+			[],
+			time()
+		);
 
 	}
 
@@ -100,7 +118,7 @@ class Init_mq
 			wp_enqueue_editor(); // Loads TinyMCE and QuickTags
 		}
 	}
-	
+
 
 
 }
